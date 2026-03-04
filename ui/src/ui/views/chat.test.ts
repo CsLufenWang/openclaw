@@ -50,6 +50,10 @@ function createProps(overrides: Partial<ChatProps> = {}): ChatProps {
 }
 
 describe("chat view", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("renders compacting indicator as a badge", () => {
     const container = document.createElement("div");
     render(
@@ -224,7 +228,6 @@ describe("chat view", () => {
     newSessionButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(onNewSession).toHaveBeenCalledTimes(1);
     expect(container.textContent).not.toContain("Stop");
-    vi.restoreAllMocks();
   });
 
   it("does not start new session when user cancels confirmation", () => {
@@ -247,6 +250,5 @@ describe("chat view", () => {
     expect(newSessionButton).not.toBeUndefined();
     newSessionButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(onNewSession).not.toHaveBeenCalled();
-    vi.restoreAllMocks();
   });
 });
